@@ -1,0 +1,21 @@
+name: golang-gulp-ruby
+version: 0.0.1
+inherits: wercker/ubuntu12.04-webessentials@0.0.3
+type: main
+platform: ubuntu@12.04
+description: wercker box to run hugo in combination with nodejs and ruby
+keywords:
+  - golang
+  - nodejs
+  - ruby
+  - opensource
+script: |
+  sudo apt-get update -y
+  sudo apt-get install golang build-essential -y
+  sudo curl -L https://get.rvm.io | bash -s stable
+  sudo source ~/.rvm/scripts/rvm
+  sudo rvm requirements
+  sudo rvm install ruby
+  sudo rvm use ruby --default
+  sudo curl --silent --location https://deb.nodesource.com/setup_0.12 | sudo bash -
+  sudo apt-get install --yes nodejs
