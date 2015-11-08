@@ -36,7 +36,7 @@ RUN echo 'install: --no-document\nupdate: --no-document' >> "$HOME/.gemrc"
 # some of ruby's build scripts are written in ruby
 # we purge this later to make sure our final image uses what we just built
 RUN apt-get update \
-	&& apt-get install -y bison libgdbm-dev ruby autoconf \
+	&& apt-get install -y bison libgdbm-dev ruby autoconf zlib1g-dev libssl-dev \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& mkdir -p /usr/src/ruby \
 	&& curl -fSL -o ruby.tar.gz "http://cache.ruby-lang.org/pub/ruby/$RUBY_MAJOR/ruby-$RUBY_VERSION.tar.gz" \
@@ -48,7 +48,7 @@ RUN apt-get update \
 	&& ./configure --disable-install-doc \
 	&& make -j"$(nproc)" \
 	&& make install \
-	&& apt-get purge -y --auto-remove bison libgdbm-dev ruby \
+	&& apt-get purge -y --auto-remove bison libgdbm-dev ruby autoconf zlib1g-dev libssl-dev \
 	&& gem update --system $RUBYGEMS_VERSION \
 	&& rm -r /usr/src/ruby
 
